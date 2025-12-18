@@ -1,0 +1,331 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soumik Belel - Data Analyst Skills</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    <div id="root"></div>
+    
+    <script type="text/babel">
+        const { useState } = React;
+        const { CheckCircle, Circle, ChevronDown, ChevronUp } = lucide;
+
+        const DataScienceRoadmap = () => {
+          const [expandedSections, setExpandedSections] = useState({});
+          const [checkedItems, setCheckedItems] = useState({});
+
+          const roadmapData = [
+            {
+              phase: "Phase 1: Foundations",
+              duration: "3-6 months",
+              color: "bg-blue-500",
+              sections: [
+                {
+                  title: "Mathematics & Statistics",
+                  items: [
+                    "Linear Algebra (vectors, matrices, eigenvalues)",
+                    "Calculus (derivatives, integrals, optimization)",
+                    "Probability Theory (distributions, Bayes theorem)",
+                    "Statistics (hypothesis testing, confidence intervals, A/B testing)",
+                    "Descriptive & Inferential Statistics"
+                  ]
+                },
+                {
+                  title: "Programming Fundamentals",
+                  items: [
+                    "Python basics (data types, control flow, functions)",
+                    "Data structures (lists, dictionaries, sets)",
+                    "Object-oriented programming",
+                    "Git & version control",
+                    "Command line basics"
+                  ]
+                }
+              ]
+            },
+            {
+              phase: "Phase 2: Core Data Skills",
+              duration: "4-8 months",
+              color: "bg-green-500",
+              sections: [
+                {
+                  title: "Data Manipulation & Analysis",
+                  items: [
+                    "NumPy (arrays, broadcasting, vectorization)",
+                    "Pandas (DataFrames, data cleaning, transformation)",
+                    "SQL (joins, aggregations, subqueries, window functions)",
+                    "Data cleaning & preprocessing techniques",
+                    "Exploratory Data Analysis (EDA)"
+                  ]
+                },
+                {
+                  title: "Data Visualization",
+                  items: [
+                    "Matplotlib & Seaborn",
+                    "Plotly for interactive visualizations",
+                    "Dashboard creation (Streamlit, Tableau, or Power BI)",
+                    "Data storytelling principles",
+                    "Best practices in visualization design"
+                  ]
+                }
+              ]
+            },
+            {
+              phase: "Phase 3: Machine Learning",
+              duration: "6-12 months",
+              color: "bg-purple-500",
+              sections: [
+                {
+                  title: "Classical ML Algorithms",
+                  items: [
+                    "Supervised Learning (Linear/Logistic Regression, Decision Trees, Random Forests, SVM)",
+                    "Unsupervised Learning (K-Means, Hierarchical Clustering, PCA)",
+                    "Model evaluation metrics (accuracy, precision, recall, F1, ROC-AUC)",
+                    "Cross-validation & hyperparameter tuning",
+                    "Feature engineering & selection"
+                  ]
+                },
+                {
+                  title: "ML Libraries & Frameworks",
+                  items: [
+                    "Scikit-learn (core ML library)",
+                    "XGBoost & LightGBM (gradient boosting)",
+                    "Model deployment basics",
+                    "ML pipelines & automation",
+                    "Experiment tracking (MLflow, Weights & Biases)"
+                  ]
+                }
+              ]
+            },
+            {
+              phase: "Phase 4: Deep Learning",
+              duration: "4-8 months",
+              color: "bg-orange-500",
+              sections: [
+                {
+                  title: "Neural Networks",
+                  items: [
+                    "Neural network fundamentals (activation functions, backpropagation)",
+                    "TensorFlow or PyTorch",
+                    "Convolutional Neural Networks (CNNs) for computer vision",
+                    "Recurrent Neural Networks (RNNs, LSTMs) for sequences",
+                    "Transfer learning & fine-tuning"
+                  ]
+                },
+                {
+                  title: "Advanced DL Topics",
+                  items: [
+                    "Transformers & attention mechanisms",
+                    "Natural Language Processing (NLP)",
+                    "Large Language Models (LLMs) basics",
+                    "Model optimization & quantization",
+                    "GPU acceleration"
+                  ]
+                }
+              ]
+            },
+            {
+              phase: "Phase 5: Production & Engineering",
+              duration: "3-6 months",
+              color: "bg-red-500",
+              sections: [
+                {
+                  title: "MLOps & Deployment",
+                  items: [
+                    "Docker & containerization",
+                    "API development (FastAPI, Flask)",
+                    "Cloud platforms (AWS, GCP, or Azure)",
+                    "CI/CD for ML models",
+                    "Model monitoring & maintenance"
+                  ]
+                },
+                {
+                  title: "Big Data Tools",
+                  items: [
+                    "Spark for distributed computing",
+                    "Data warehousing concepts",
+                    "NoSQL databases (MongoDB, Redis)",
+                    "Data pipeline orchestration (Airflow)",
+                    "Streaming data (Kafka basics)"
+                  ]
+                }
+              ]
+            },
+            {
+              phase: "Phase 6: Specialization & Soft Skills",
+              duration: "Ongoing",
+              color: "bg-indigo-500",
+              sections: [
+                {
+                  title: "Choose Your Focus",
+                  items: [
+                    "Computer Vision (object detection, segmentation, GANs)",
+                    "NLP & LLMs (RAG, prompt engineering, fine-tuning)",
+                    "Time Series Analysis (forecasting, anomaly detection)",
+                    "Recommendation Systems",
+                    "Reinforcement Learning"
+                  ]
+                },
+                {
+                  title: "Professional Skills",
+                  items: [
+                    "Business acumen & domain knowledge",
+                    "Communication & presentation skills",
+                    "Project management for data projects",
+                    "Ethical AI & bias mitigation",
+                    "Building a portfolio & GitHub presence"
+                  ]
+                }
+              ]
+            }
+          ];
+
+          const toggleSection = (phaseIndex, sectionIndex) => {
+            const key = `${phaseIndex}-${sectionIndex}`;
+            setExpandedSections(prev => ({
+              ...prev,
+              [key]: !prev[key]
+            }));
+          };
+
+          const toggleItem = (phaseIndex, sectionIndex, itemIndex) => {
+            const key = `${phaseIndex}-${sectionIndex}-${itemIndex}`;
+            setCheckedItems(prev => ({
+              ...prev,
+              [key]: !prev[key]
+            }));
+          };
+
+          return (
+            <div className="min-h-screen bg-gradient-to-br from-slate-50 to-slate-100 p-6">
+              <div className="max-w-5xl mx-auto">
+                <div className="text-center mb-8">
+                  <h1 className="text-4xl font-bold text-slate-800 mb-2">SOUMIK BELEL DATA ANALYST SKILLS</h1>
+                  <p className="text-slate-600">Comprehensive skill development roadmap</p>
+                  <p className="text-sm text-slate-500 mt-2">"In God we trust, all others must bring data." - W. Edwards Deming</p>
+                </div>
+
+                <div className="space-y-6">
+                  {roadmapData.map((phase, phaseIndex) => (
+                    <div key={phaseIndex} className="bg-white rounded-lg shadow-md overflow-hidden">
+                      <div className={`${phase.color} text-white p-4`}>
+                        <h2 className="text-2xl font-bold">{phase.phase}</h2>
+                        <p className="text-sm opacity-90">{phase.duration}</p>
+                      </div>
+
+                      <div className="p-4">
+                        {phase.sections.map((section, sectionIndex) => {
+                          const sectionKey = `${phaseIndex}-${sectionIndex}`;
+                          const isExpanded = expandedSections[sectionKey];
+                          
+                          return (
+                            <div key={sectionIndex} className="mb-4 last:mb-0">
+                              <button
+                                onClick={() => toggleSection(phaseIndex, sectionIndex)}
+                                className="w-full flex items-center justify-between p-3 bg-slate-50 hover:bg-slate-100 rounded-lg transition-colors"
+                              >
+                                <h3 className="text-lg font-semibold text-slate-700">{section.title}</h3>
+                                {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+                              </button>
+
+                              {isExpanded && (
+                                <div className="mt-2 ml-4 space-y-2">
+                                  {section.items.map((item, itemIndex) => {
+                                    const itemKey = `${phaseIndex}-${sectionIndex}-${itemIndex}`;
+                                    const isChecked = checkedItems[itemKey];
+                                    
+                                    return (
+                                      <div
+                                        key={itemIndex}
+                                        className="flex items-start gap-3 p-2 hover:bg-slate-50 rounded cursor-pointer transition-colors"
+                                        onClick={() => toggleItem(phaseIndex, sectionIndex, itemIndex)}
+                                      >
+                                        {isChecked ? (
+                                          <CheckCircle size={20} className="text-green-500 flex-shrink-0 mt-0.5" />
+                                        ) : (
+                                          <Circle size={20} className="text-slate-300 flex-shrink-0 mt-0.5" />
+                                        )}
+                                        <span className={`text-slate-700 ${isChecked ? 'line-through opacity-60' : ''}`}>
+                                          {item}
+                                        </span>
+                                      </div>
+                                    );
+                                  })}
+                                </div>
+                              )}
+                            </div>
+                          );
+                        })}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="mt-8 bg-white rounded-lg shadow-md p-6">
+                  <h3 className="text-xl font-bold text-slate-800 mb-4">Project & Experience Portfolio</h3>
+                  <ul className="space-y-2 text-slate-700 mb-6">
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Customer Segmentation Analysis - Identify target audiences and optimize marketing strategies</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Sales Forecasting Models - Predict revenue trends and support inventory planning</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Churn Prediction System - Reduce customer attrition and improve retention rates</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>Interactive Dashboards - Visualize KPIs for real-time business decision-making</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-blue-500 font-bold">•</span>
+                      <span>A/B Testing Framework - Optimize product features and marketing campaigns</span>
+                    </li>
+                  </ul>
+                  
+                  <h3 className="text-xl font-bold text-slate-800 mb-4">Business Value Delivered</h3>
+                  <ul className="space-y-2 text-slate-700">
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Drive data-informed decisions that increase revenue and reduce costs</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Automate reporting processes saving 10-20 hours per week for teams</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Identify market opportunities and customer insights for competitive advantage</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Improve operational efficiency through predictive analytics and optimization</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-green-500 font-bold">✓</span>
+                      <span>Transform complex data into actionable insights for stakeholders at all levels</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          );
+        };
+
+        ReactDOM.render(<DataScienceRoadmap />, document.getElementById('root'));
+    </script>
+    
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+</body>
+</html>
